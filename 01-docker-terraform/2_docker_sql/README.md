@@ -26,10 +26,12 @@ docker run -it \
   -e POSTGRES_USER="root" \
   -e POSTGRES_PASSWORD="root" \
   -e POSTGRES_DB="ny_taxi" \
-  -v c:/Users/alexe/git/data-engineering-zoomcamp/week_1_basics_n_setup/2_docker_sql/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -v "/$(pwd)"/ny_taxi_postgres_data":/var/lib/postgresql/data \
   -p 5432:5432 \
   postgres:13
 ```
+
+docker run -it    -e POSTGRES_USER="root"    -e POSTGRES_PASSWORD="root"    -e POSTGRES_DB="ny_taxi"    -v $(pwd)"/ny_taxi_postgres_data:/var/lib/postgresql/data    -p 5432:5431    postgres:13
 
 If you have the following error:
 
@@ -56,13 +58,19 @@ Change the mounting path. Replace it with the following:
 
 
 ```bash
-docker run -it \
-  -e POSTGRES_USER="root" \
-  -e POSTGRES_PASSWORD="root" \
-  -e POSTGRES_DB="ny_taxi" \
-  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
-  -p 5432:5432 \
-  postgres:13
+docker run -it    -e POSTGRES_USER="root"    -e POSTGRES_PASSWORD="root"     -e POSTGRES_DB="ny_taxi"     -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data    -p 5432:5432    postgres:13
+
+docker run -it    -e POSTGRES_USER="root"    -e POSTGRES_PASSWORD="root"    -e POSTGRES_DB="ny_taxi"    -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data    -p 5432:5432    postgres:13 
+
+docker volume create --name dtc_postgres_volume_local -d local
+
+    docker run -it \
+     -e POSTGRES_USER="root" \
+     -e POSTGRES_PASSWORD="root" \
+     -e POSTGRES_DB="ny_taxi" \
+     -v dtc_postgres_volume_local:/var/lib/postgresql/data \
+     -p 5432:5432 \
+     postgres:13
 ```
 
 If you see that `ny_taxi_postgres_data` is empty after running
@@ -90,7 +98,26 @@ pip install -U mycli
 Using `pgcli` to connect to Postgres
 
 ```bash
+ sudo python3 -m venv /mnt/c/Users/tinyu/Documents/GitHub/data-engineering-zoomcamp/01-docker-terraform/2_docker_sql/
+
+ source /mnt/c/Users/tinyu/Documents/GitHub/data-engineering-zoomcamp/01-docker-terraform/2_docker_sql/bin/activate
+
+pip instal pgcli
 pgcli -h localhost -p 5432 -u root -d ny_taxi
+
+pip install pandas==2.0.0  
+pip install sqlalchemy==1.4.16 
+pip install psycopg2-binary
+pip install pyarrow ( for parquet file)
+
+    docker run -it \
+     -e POSTGRES_USER=root \
+     -e POSTGRES_PASSWORD=root \
+     -e POSTGRES_DB=ny_taxi \
+     -p 5431:5432 \
+     postgres:13
+
+pgcli -h localhost -p 5431 -U root -d ny_taxi
 ```
 
 
@@ -144,12 +171,27 @@ docker run -it \
   -e POSTGRES_USER="root" \
   -e POSTGRES_PASSWORD="root" \
   -e POSTGRES_DB="ny_taxi" \
-  -v c:/Users/alexe/git/data-engineering-zoomcamp/week_1_basics_n_setup/2_docker_sql/ny_taxi_postgres_data:/var/lib/postgresql/data \
-  -p 5432:5432 \
+  -v $(pwd)$/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -p 5432:5431 \
   --network=pg-network \
   --name pg-database \
   postgres:13
 ```
+
+docker volume create --name dtc_postgres_volume_local -d local
+
+    docker run -it \
+     -e POSTGRES_USER="root" \
+     -e POSTGRES_PASSWORD="root" \
+     -e POSTGRES_DB="ny_taxi" \
+     -v dtc_postgres_volume_local:/var/lib/postgresql/data \
+     -p 5432:5431 \
+     --network=pg-network \
+     --name pg-database \
+     postgres:13
+
+
+
 
 Run pgAdmin
 
@@ -258,6 +300,30 @@ services:
 ```
 
 
-### SQL 
+When you run docker-compose up, Docker Compose creates a default network for the services defined in your docker-compose.yml file. The network is usually named based on the project directory and some default conventions. Here's an overview of the default network setup:
 
-Coming soon!
+Default Network Name
+By default, Docker Compose creates a network named <project_name>_<default_network_name>, where:
+<project_name> is derived from the name of the directory containing the docker-compose.yml file (or can be manually specified with the -p flag).
+<default_network_name> is typically default.
+
+procedure:
+
+docker compose up
+
+docker build -t taxi_ingest:v001 .  
+  
+URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz"
+
+docker run -it \
+  --network=2_docker_sql_pg-network \
+  taxi_ingest:v001 \
+    --user=root \
+    --password=root \
+    --host=pgdatabase \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=green_taxi_trips \
+    --url=${URL}
+
+

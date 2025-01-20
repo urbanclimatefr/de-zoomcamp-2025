@@ -6,9 +6,11 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=ny_taxi
     volumes:
-      - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+      - dtc_postgres_volume_local:/var/lib/postgresql/data:rw"
     ports:
       - "5432:5432"
+    networks:
+      - pg-network
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -16,4 +18,14 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - "8080:80"
+    networks:
+      - pg-network
+volumes:
+  dtc_postgres_volume_local:
+    external: true
+networks:
+  pg-network:
+    
+
+
     
