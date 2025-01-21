@@ -309,7 +309,13 @@ By default, Docker Compose creates a network named <project_name>_<default_netwo
 
 procedure:
 
-docker compose up
+sudo python3 -m venv /mnt/c/Users/tinyu/Documents/GitHub/data-engineering-zoomcamp/01-docker-terraform/2_docker_sql/
+
+source /mnt/c/Users/tinyu/Documents/GitHub/data-engineering-zoomcamp/01-docker-terraform/2_docker_sql/bin/activate
+
+docker volume create --name dtc_postgres_volume_local -d local
+
+docker-compose up
 
 docker build -t taxi_ingest:v001 .  
   
@@ -327,3 +333,25 @@ docker run -it \
     --url=${URL}
 
 
+SQL
+
+SELECT
+    SUM(CASE WHEN trip_distance <= 1 THEN 1 ELSE 0 END) AS up_to_1_mile,
+    SUM(CASE WHEN trip_distance > 1 AND trip_distance <= 3 THEN 1 ELSE 0 END) AS between_1_and_3_miles,
+    SUM(CASE WHEN trip_distance > 3 AND trip_distance <= 7 THEN 1 ELSE 0 END) AS between_3_and_7_miles,
+    SUM(CASE WHEN trip_distance > 7 AND trip_distance <= 10 THEN 1 ELSE 0 END) AS between_7_and_10_miles,
+    SUM(CASE WHEN trip_distance > 10 THEN 1 ELSE 0 END) AS over_10_miles
+FROM public.green_taxi_trips
+WHERE lpep_pickup_datetime >= '2019-10-01' AND lpep_pickup_datetime < '2019-11-01'
+  AND lpep_dropoff_datetime >= '2019-10-01' AND lpep_dropoff_datetime < '2019-11-01';
+
+
+SELECT 
+    DATE(lpep_pickup_datetime) AS pickup_day,
+    MAX(trip_distance) AS longest_trip_distance
+FROM public.green_taxi_trips
+WHERE lpep_pickup_datetime >= '2019-10-01' 
+  AND lpep_pickup_datetime < '2019-11-01'
+GROUP BY pickup_day
+ORDER BY longest_trip_distance DESC
+LIMIT 1;
