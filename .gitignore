@@ -15,4 +15,4 @@ serving_dir
 .ipynb_checkpoints/
 !week_6_stream_processing/avro_example/data/rides.csv
 01-docker-terraform/2_docker_sql/
-02-workflow-orchestration/04_gcp_kv.yaml
+02-workflow-orchestration/flows/04_gcp_kv.yaml
