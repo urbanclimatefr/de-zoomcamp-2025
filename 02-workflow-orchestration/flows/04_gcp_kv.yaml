@@ -1,4 +1,4 @@
-id: 04_gcp_kv
+d: 04_gcp_kv
 namespace: zoomcamp
 
 tasks:
@@ -9,14 +9,24 @@ tasks:
     value: |
       {
         "type": "service_account",
-        "project_id": "...",
+        "project_id": "dotted-hulling-448719-p8",
+        "private_key_id": "ea8ee85edd2048790f29d41b9da870dd861f28f2",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDcrXiShk+f+4o1\n1T/tmEYmhMWQqjitGDPQ4FrMJsdeeyHZsTvZ6py/kiOywH0Ga/YImrHk/XDVMsm1\nl3372mZ05nD4otxuo/05WBGC4TJP8y+0VXXD8gS0hxUMWMdB1vxxW9is0/5saUfQ\nl/QXxDj1RXDuKRWpMA7F0ktmwWnQK3f8hUjhQu9H647LuEGNVVKtkoa1oPm15pWS\npE4/jw6sBpPbO6tNSUakYBa9u3vp6oXMR2BJKyTK4cK9mdKUxptfXKldzrojnk4F\nSy63x5uRIbJv5vitYyeFlAmHnJnRSvfDcwa8xDkF/Ck0gB9u+6OEUfgMvPPbkYil\ntEQ9YGk/AgMBAAECggEAYaA4pBHZLfx442Ho+zKPbkD0qhA0LJd1bOWkJYbOUoUE\nr6rRwJEjMTj0pAK2DN48JQhSxOw+O4NRaw2PBZlUFElSFxztieDwiKrmbFE2EdqS\n8yOPitUJsdfEvwaTeBQk7/1i+Op8NvfIdoaSzOTZEeDbmfEBDS0ei/OBuf680gNm\np/rliOq6D5FQfkJ68CSZccypzqGuleiVUHPpYe39sr6l6hK72aERXnXK0afpsFKo\nmxds8Wd33hGlZB/pXMAgyw1E89yoD5zy5jFKsd2kCAOi9KbdPIWBfahWa23g/xA3\nOx/6+KlrRkE8cfMztS3oNJeQsmnJ43vrPMrkJzew0QKBgQDxpfMTDrCGDTaa9+5x\nVJWj9R9U8HD2gwoKyGksBCtRdXhz7FEGDkkhM9e8USVtOH0GZAIpb5SPlLBksOLj\nNoksZ/2vIO1TgTXVm3OsoYnjaf3mGUfrHGZ8VGDuJzkOFwQQrv3hqW/5K36BVR5G\n5uGbOZPY2T8533B2FdyMy+KfuQKBgQDpyK54OUJcbHM9vF0DB/x/FKYgsOR9cN8A\n8KotfcSjxKhX2rVeHpiirzjiH8dgjSJv17yHqTlmg/FbUIGpOlM/NGtLfx2aRKmz\nJcESpUeQvXW6urdxEKY5xeTCmsbyb3g/1U47PcLi5+qU8KW9lHm7+yvYolyReMMp\nfsYOwCgctwKBgHTUO6n6DyQwXTcdKT3HnDVRvF0vhh3YitFdxWNPfLX8akj5ds7L\nt1WDIAle3g5pIiEl1tm7pYKpa4Ky9m7NnhJHEKJL9BHMRX/JkWpkCytUwjkt/dRQ\nvcfcb6SUeAQ04nVCdWJVrdo0yguzYFj9JRQMCUvs9KGBQnkE5sV3iVCZAoGABDHt\nr4qXfkET8E+o+5zxEvaz5HJIJ1gXKFUpOJfBJ48n1iu+hWnXI1QxmR0o3rqpm4gr\ngeOve/9yHUlcikTZqZCvPDOTvGjvAp/yzvrYReigbDFdiVHbKb47VKKiX0dQyRRy\nyu1YyemPdAy9bKF1bcIcD08aiiG4ns3/j9Qy5BECgYBqBG3BI7jHcFECeh16jttw\nbGCdjdbQ58lEOtyUht1ycbI9uT0JZK3qd216G0Y1F0z+al8rTeG+sg/8NtP3V+7T\nEwYtkM22cC4ysgp3/wswEcp+mSnIIXePslLisdsPGOknK7K177sQ0bSOmfK9M9sW\nxwRG9brfyCjtREJnrn/GEg==\n-----END PRIVATE KEY-----\n",
+        "client_email": "zoomcamp@dotted-hulling-448719-p8.iam.gserviceaccount.com",
+        "client_id": "104181580103885596721",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/zoomcamp%40dotted-hulling-448719-p8.iam.gserviceaccount.com",
+        "universe_domain": "googleapis.com"
       }
+
 
   - id: gcp_project_id
     type: io.kestra.plugin.core.kv.Set
     key: GCP_PROJECT_ID
     kvType: STRING
-    value: kestra-sandbox # TODO replace with your project id
+    value: dotted-hulling-448719-p8 # TODO replace with your project id
 
   - id: gcp_location
     type: io.kestra.plugin.core.kv.Set
@@ -28,7 +38,7 @@ tasks:
     type: io.kestra.plugin.core.kv.Set
     key: GCP_BUCKET_NAME
     kvType: STRING
-    value: your-name-kestra # TODO make sure it's globally unique!
+    value: kestra-de-zoomcamp-kenneth-bucket # TODO make sure it's globally unique!
 
   - id: gcp_dataset
     type: io.kestra.plugin.core.kv.Set
