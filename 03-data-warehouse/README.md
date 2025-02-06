@@ -1,3 +1,7 @@
+I downloaded the parquet data from the NYC Taxi trip data website and uploaded them to GCS Bucket manually and then modfied the workflow in kestra to do the transfer from GCS to google Bigquery table.
+Many column type are changed as the data is changed from CSV to parquet.
+
+
 # Data Warehouse and BigQuery
 
 - [Slides](https://docs.google.com/presentation/d/1a3ZoBAXFk8-EhUsd7rAZd-5p_HpltkzSeujjRGB2TAI/edit?usp=sharing)  
